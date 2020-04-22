@@ -1,0 +1,21 @@
+SMALLEST ROOM:
+print(f'exits: {player.current_room.get_exits()}')
+print(f'curr room: {player.current_room.id}')
+player.travel('n')
+traversal_path.append('n')
+player.travel('n')
+traversal_path.append('n')
+print(f'curr room: {player.current_room.id}')
+
+NEXT UP:
+directions = ['n','n','s','s','e','e','w','w','w','w','e','e','s','s']
+for i in directions:
+    player.travel(i)
+    traversal_path.append(i)
+
+NEXT UP:
+directions = ['w','w','s','s','e','e','n','n','n','n','s','s','e','e']
+
+for i in directions:
+    player.travel(i)
+    traversal_path.append(i)

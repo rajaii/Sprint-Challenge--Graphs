@@ -13,16 +13,30 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = set()
+        self.vertices[vertex_id] = {'n': '?', 's': '?', 'w': '?', 'e': '?'}
 
-    def add_edge(self, v1, v2):
+    def add_edge(self, v1, v2, old_room, current_room):
         """
         Add a directed edge to the graph from v1 to v2.
         """
         #check if they exist
         if v1 in self.vertices and v2 in self.vertices:
-            #add edge
-            self.vertices[v1].add(v2)
+            #check position and add to graph:
+            if old_room.n_to == current_room and current_room.s_to == old_room:
+                self.vertices[v1]['n'] = v2
+                self.vertices[v2]['s'] = v1
+            if old_room.e_to == current_room and current_room.w_to == old_room:
+                self.vertices[v1]['e'] = v2
+                self.vertices[v2]['w'] = v1
+            if old_room.s_to == current_room and current_room.n_to == old_room:
+                self.vertices[v1]['s'] = v2
+                self.vertices[v2]['n'] = v1
+            if old_room.w_to == current_room and current_room.e_to == old_room:
+                print(f'aaa: {self.vertices}')
+                self.vertices[v1]['w'] = v2
+                self.vertices[v2]['e'] = v1
+            # #add edge
+            # self.vertices[v1].add(v2)
         else:
             print(f'Error adding edge: vertex not found for ({v1}, {v2})')
 

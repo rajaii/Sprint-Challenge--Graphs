@@ -1,6 +1,9 @@
 from room import Room
 from player import Player
 from world import World
+from util import Stack, Queue
+from traversal_graph import Graph
+
 
 import random
 from ast import literal_eval
@@ -10,10 +13,10 @@ world = World()
 
 
 # You may uncomment the smaller graphs for development and testing purposes.
-map_file = "maps/test_line.txt"
-# map_file = "maps/test_cross.txt"
-# map_file = "maps/test_loop.txt"
-# map_file = "maps/test_loop_fork.txt"
+#map_file = "maps/test_line.txt"
+#map_file = "maps/test_cross.txt"
+#map_file = "maps/test_loop.txt"
+map_file = "maps/test_loop_fork.txt"
 #map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
@@ -29,7 +32,31 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
+# You may find the commands `player.current_room.id`, 
+# `player.current_room.get_exits()` and `player.travel(direction)`
+#  useful
+gg = Graph()
 
+#travel and append in t_p, create graph and dft on it
+
+
+def populate_graph():
+    directions = ['w','w','s','s','e','e','n','n','e','e','w','w','n','n','s','e','e','n','s','w','w','w','w','n']
+    gg.add_vertex(player.current_room.id)
+    for i in directions:
+        old_room = player.current_room
+        player.travel(i)
+        traversal_path.append(i)
+        gg.add_vertex(player.current_room.id)
+        
+        gg.add_edge(old_room.id, player.current_room.id, old_room, player.current_room)
+        
+populate_graph()
+
+
+
+
+    
 
 # TRAVERSAL TEST
 visited_rooms = set()
