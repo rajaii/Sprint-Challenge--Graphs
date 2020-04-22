@@ -9,11 +9,14 @@ class Graph:
     def __init__(self):
         self.vertices = {}
 
-    def add_vertex(self, vertex_id):
+    def add_vertex(self, vertex_id, exits):
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = {'n': '?', 's': '?', 'w': '?', 'e': '?'}
+        
+        self.vertices[vertex_id] = {}
+        for i in exits:
+            self.vertices[vertex_id][i] = '?'
 
     def add_edge(self, v1, v2, old_room, current_room):
         """
