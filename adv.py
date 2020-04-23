@@ -61,25 +61,30 @@ def populate_big_graph():
     forward_direction = None
     reverse = []
     
+    
     while True:
         cur = player.current_room
         if cur.id not in gg.vertices:
             exits = player.current_room.get_exits()
             gg.add_vertex(player.current_room.id, exits)
-        print(f'prev: {prev}, b_d: {backwards_direction}, f_d: {forward_direction}')
+            
+        print(f'prev: {prev and prev.id}, b_d: {backwards_direction}, f_d: {forward_direction}')
         if prev is not None and backwards_direction is not None and forward_direction is not None:
             gg.add_edge(prev.id, cur.id, prev, cur)
             print('inside the if')
-        ali = True
-        while ali:#current room has exits with ?
+        
+        if len(gg.vertices) >= len(world.rooms):
+            break
+        while '?' not in gg.vertices[player.current_room.id].values():#current room has exits with ?
             # print('?' in gg.vertices[player.current_room.id].values())
-            if '?' in gg.vertices[player.current_room.id].values(): 
-                ali = False
+            print('in while')
+            
             if len(reverse) > 0:
             
                 bk = reverse.pop()
                 player.travel(bk)
                 traversal_path.append(bk)
+                print(f'traversal path: {traversal_path}')
 
         for e, v in gg.vertices[cur.id].items():
             print(f'e is {e}')
@@ -88,7 +93,8 @@ def populate_big_graph():
                 backwards_direction = set_opposite_of_dir(e)
                 forward_direction = e
                 player.travel(e)
-                
+                #looping so traversal path is :
+                #['n', 's', 's', 'n', 'w', 'e', 'n', 's', 'e', 'w', 'n', 's']
                 # gg.add_edge(prev.id, cur.id, prev, cur)
                 reverse.append(backwards_direction)
                 traversal_path.append(e)
