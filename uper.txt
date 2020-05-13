@@ -1,0 +1,112 @@
+Start by writing an algorithm that picks a random unexplored direction from the player's current room, 
+travels and logs that direction, then loops. This should cause your player to walk a depth-first traversal.
+When you reach a dead-end (i.e. a room with no unexplored paths), walk back to the nearest room that does 
+contain an unexplored path.
+
+You can find the path to the shortest unexplored room by using a breadth-first search for a room with a `'?'` for
+ an exit. If you use the `bfs` code from the homework, you will need to make a few modifications.
+
+ walk dft then run brs as per ^
+
+ modify bfs to :
+ 1. Instead of searching for a target vertex, you are searching for an exit with a `'?'`
+  as the value. If an exit has been explored, you can put it in your BFS queue like normal.
+
+2. BFS will return the path as a list of room IDs. You will need to convert this to a list of n/s/e/w directions 
+before you can add it to your traversal path.
+
+0: {'n': '?', 's': 5, 'w': '?', 'e': '?'},
+5: {'n': 0, 's': '?', 'e': '?'}
+
+tupule is x, y coordinates
+
+You may find the commands `player.current_room.id`,
+ `player.current_room.get_exits()` and `player.travel(direction)`
+  useful.
+
+P:
+init graph 
+vertices = dict
+add_edge advjusted to account for n_to s_to etc
+vertex id == room 
+
+TRY TO TRAVERSE TJE ROOM IN adv.py WITHOUT MAKING GRAPH
+
+####################################################################333333
+
+import graph into adv
+
+tweak graph functions to be able to add the stuff accordingly
+
+make populate graph function
+---------------------------------------------------------------------
+
+in adv def bft and dft passing in a graph and prob a player and 
+run the player commands in the functions populating graph and populate 
+the directions list with the paths
+
+call those and run:
+-------------------------------------------------------------------------
+
+You may find the commands `player.current_room.id`, `player.current_room.get_exits()` and `player.travel(direction)` useful
+
+
+gg = Graph
+
+def populate graph(traversal_graph, room, player):
+  #tag start in var so can return 
+  starting_room = player.current_room
+  
+  #add curr to graph and tag curr room in var so when move still have its id
+  old_room = player.current_room
+  gg.add_vertex(player.current_room.id)
+
+  #make sure this if calls and changes the current room!!!!!!!
+  #if player can move in direction add edge
+  if player.travel(direction):    
+    gg.add_vertex(player.current_room.id)
+    gg.add_edge(old_room.id, player.current_room.id, old_room, current_room)
+    
+    #loop through all exits to this room now and go in and add and add_edges
+    exits = player.current_room.get_exits()
+    rooms_to_add = []
+    old_room = player.current_room
+    While exits is not None and len(rooms_to_add) != len(exits):
+      for e in exits:
+        player.travel(e)
+        gg.add_vertex(player.current_room.id)
+        gg.add_edge(old_room.id, player.current_room.id, old_room, current_room)
+        rooms_to_add.append(1)
+
+    
+try:
+dft on world passing in traversal graph, and adding to t_g as we go
+
+     
+
+
+       #loop through all exits to this room now and go in and add and add_edges
+                # old_room = path[-1]
+                # total_exits = [old_room]
+                # rooms_to_add = []
+                # while len(exits) > 0 and len(rooms_to_add) != len(exits):
+                #     exits = old_room.get_exits()
+                #     for e in exits:
+                #         player.travel(e)
+                #         next_room = player.current_room
+                #         traversal_graph.append({next_room.id: {'n': '?', 's': '?', 'w': '?', 'e': '?'}})
+                #         if old_room.n_to == next_room and next_room.s_to == old_room: 
+                #             traversal_graph[old_room.id]['n'] = next_room.id
+                #             traversal_graph[next_room.id]['s'] = old_room.id
+                #         if old_room.e_to == next_room and next_room.w_to == old_room:
+                #             traversal_graph[old_room.id]['e'] = next_room.id
+                #             traversal_graph[next_room.id]['w'] = old_room.id
+                #         if old_room.s_to == next_room and next_room.n_to == old_room:
+                #             traversal_graph[old_room.id]['s'] = next_room.id
+                #             traversal_graph[next_room.id]['n'] = old_room.id
+                #         if old_room.w_to == next_room and next_room.e_to == old_room:
+                #             traversal_graph[old_room.id]['w'] = next_room.id
+                #             traversal_graph[next_room.id]['e'] = old_room.id
+                #         rooms_to_add.append(1)
+                #     old_room = next_room 
+
